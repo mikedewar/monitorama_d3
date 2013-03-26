@@ -1,0 +1,43 @@
+The first piece is to demonstrate how we get data from the websocket, and then a little bit of d3 to make a list with that data
+
+ws.onmessage = function(evt){data = JSON.parse(evt.data); console.log(data);}
+ws.onmessage = null
+d3.select('body').append('ul')
+d3.select('ul').selectAll('li')
+d3.select('ul').selectAll('li').data(data)
+d3.select('ul').selectAll('li').data(data).enter()
+d3.select('ul').selectAll('li').data(data).enter().append('li')
+d3.selectAll('li').text(function(d){return d.ll})
+
+The second piece is to draw some ciricles using d3
+
+ws.onmessage = function(evt){data = JSON.parse(evt.data); console.log(data);}
+ws.onmessage = null
+svg = d3.select('body').append('svg')
+svg.selectAll('circle').data(data).enter().append('circle')
+svg.selectAll('circle').attr('cx',function(d){return d.ll[1]}).attr('cy',function(d){return d.ll[0]}).attr('r',4)
+
+svg.selectAll('circle')
+	.attr('cx',function(d){return 180 + d.ll[1]})
+	.attr('cy',function(d){return d.ll[0]})
+	.attr('r',4)
+
+
+The third piece is to draw some circles when the data arrives from the websocket
+
+ws.onmessage = function(evt){data = JSON.parse(evt.data); circles = app_circles(data); draw(circles)}
+
+function app_circles(data){
+	return d3.select('svg')
+		.selectAll('circle')
+		.data(data, function(d){return d.u + d.a})
+		.enter()
+		.append('circle')
+}
+
+function draw(circles){
+	circles
+		.attr('cx', function(d){return 180+d.ll[1]})
+		.attr('cy', function(d){return d.ll[-0]})
+		.attr('r',4)
+}

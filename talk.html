@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>monitorama - getting started with d3</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="/static/reveal.js/css/reveal.min.css">
+        <link rel="stylesheet" href="/static/reveal.js/css/theme/serif.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="/static/reveal.js/lib/css/zenburn.css">
+
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <section>
+                    <h1>getting started with d3</h1>
+                    <h3>mike dewar</h3>
+                    <a href="https://github.com/mikedewar/monitorama_d3">https://github.com/mikedewar/monitorama_d3</a>
+                </section>
+                
+
+                <section>
+                    <h3>d3 = <b>d</b>ata <b>d</b>riven <b>d</b>ocuments</h3>
+                    <img src="/static/bostock.jpeg" />
+                    <h3>a javascriprt library by Mike Bostock</h3>
+                </section>
+
+                <section>
+                    <h3>Today:</h3>
+                    <br />
+                    <h2>Getting Over The First Bit Of d3.js' Learning Curve</h2>
+                    <br />
+                </section>
+                <section>
+                    <h3>not today:</h3>
+                    <a href="https://github.com/mbostock/d3/wiki/Gallery">https://github.com/mbostock/d3/wiki/Gallery</a>
+                </section>
+
+                <section>
+                    <h2>Why d3.js?</h2>
+                    <ul>
+                        <li>amazing community</li>
+                        <li>everyone has a browser</li>
+                        <li>we benefit from web technology</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <p><img src="/static/bitly.png" /></p>
+                    <p>reader.py</p>
+                    <p><img src="/static/tornado.png" /></p>
+                    <p><img src="/static/chrome.png" width="107" height="107"/></p>
+                </section>
+
+                <section>
+                <h3>In every page, the websocket:</h3>
+                    <pre><code>
+var ws = new WebSocket("ws://localhost:8888/");
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>the basic d3 pattern:</h3>
+                    <pre><code>
+d3.select('container')
+    .selectAll('element')
+    .data(data)
+    .enter()
+    .append('element')
+                    </pre></code>
+
+                </section>
+
+                <section>
+                <h3>on message, do a thing:</h3>
+                <pre><code>
+ws.onmessage = function(evt){
+    data = JSON.parse(evt.data); 
+}
+console.log(data);
+                </code></pre>
+                </section>
+
+                <section>
+                <h3>draw some circles:</h3>
+                <pre><code>
+d3.select('svg')
+    .selectAll('circle')
+    .data(data)
+    .enter()
+    .append('circle')
+      .attr('cx',function(d){return 180 + d.ll[1]})
+      .attr('cy',function(d){return 90 + d.ll[0]})
+      .attr('r',4)
+                </code></pre>
+                </section>
+
+                <section>
+                <h3>using a key to join data:</h3>
+                <pre><code>
+ws.onmessage = function(evt){
+    data = JSON.parse(evt.data); 
+    circles = app_circles(data); 
+    draw(circles);
+}
+
+function append_circles(data){
+    var circles = d3.select('svg')
+        .selectAll('circle')
+        .data(data, function(d){return d.u + d.a})
+        .enter()
+        .append('circle');
+    return circles;
+}
+                </code></pre>
+                </section>
+
+                <section>
+                <h3>draw a map of the world:</h3>
+                <code><pre>
+var projection = d3.geo.kavrayskiy7();
+
+var path = d3.geo.path().projection(projection);
+
+d3.json('/static/world-110m.json', function(d){
+  d3.select('svg').selectAll("path")
+      .data(topojson.object(d, d.objects.countries).geometries)
+      .enter()
+      .append('path')
+        .attr('d', path)
+        .style('fill','none')
+        .style('stroke', 'gray')
+})
+                </code></pre>
+                </section>
+
+            <section>
+                <h3>and put it all together:</h3>
+                <code><pre>
+d3.select('svg').selectAll('circle')
+    .data(data, function(d){return d.u+d.a})
+    .enter()
+    .append('circle')
+    .attr('cx', function(d){
+        projected = projection([d.ll[1], d.ll[0]])
+        return projected[0]
+    })
+    .attr('cy', function(d){
+        projected = projection([d.ll[1], d.ll[0]])
+        return projected[1]
+    })
+    .attr('r', 4)
+                </code></pre>
+            </section>
+
+
+            </div>
+
+        </div>
+
+        <script src="/static/reveal.js/lib/js/head.min.js"></script>
+        <script src="/static/reveal.js/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '/static/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '/static/reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: '/static/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: '/static/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: '/static/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: '/static/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
