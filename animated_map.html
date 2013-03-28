@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>putting it all together</title>
+        <title>animating the arrival</title>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <script src="/static/js/d3.js"></script>
         <script src="http://d3js.org/topojson.v0.min.js"></script>
@@ -31,6 +31,7 @@
                 data = JSON.parse(evt.data)
                 circles = app_circles(data)
                 draw_circles(circles)
+                animate_circles(circles)
             }
 
             function app_circles(data){
@@ -39,6 +40,17 @@
                     .data(data, function(d){return d.u + d.a})
                     .enter()
                     .append('circle')
+            }
+
+            function draw_circles(circles){
+                circles .attr('cx', function(d){
+                    projected = projection([d.ll[1], d.ll[0]])
+                    return projected[0]
+                })
+                .attr('cy', function(d){
+                    projected = projection([d.ll[1], d.ll[0]])
+                    return projected[1]
+                })
             }
 
     </script>

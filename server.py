@@ -46,11 +46,6 @@ class PingHandler(tornado.web.RequestHandler):
         # this endpoint only for sanity checking
         self.finish('pong')
 
-class MapHandler(tornado.web.RequestHandler):
-    # render the map
-    def get(self):
-        self.render('map.html')
-
 class TalkHandler(tornado.web.RequestHandler):
     # render the talk
     def get(self):
@@ -64,9 +59,23 @@ class CirclesHandler(tornado.web.RequestHandler):
     def get(self):
         self.render('circles.html')
 
+class Circles1Handler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('circles1.html')
+
 class Map0Handler(tornado.web.RequestHandler):
     def get(self):
         self.render('map0.html')
+
+class MapHandler(tornado.web.RequestHandler):
+    # render the map
+    def get(self):
+        self.render('map.html')
+
+class AnimatedMapHandler(tornado.web.RequestHandler):
+    # render the map
+    def get(self):
+        self.render('animated_map.html')
 
 if __name__ == "__main__":
 
@@ -88,7 +97,9 @@ if __name__ == "__main__":
             (r"/talk", TalkHandler),
             (r"/basic", BasicHandler),
             (r"/circles", CirclesHandler),
+            (r"/circles1", Circles1Handler),
             (r"/map0", Map0Handler),
+            (r"/animated_map", AnimatedMapHandler),
         ],
         **settings
     )

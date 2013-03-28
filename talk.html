@@ -39,12 +39,20 @@
                     <h3>mike dewar</h3>
                     <a href="https://github.com/mikedewar/monitorama_d3">https://github.com/mikedewar/monitorama_d3</a>
                 </section>
+
+                <section>
+                    <p style="text-align:center"><img width="200" src="/static/sheffield.png" />
+                    <img width="230" src="/static/edinburgh.png" />
+                    <img width="250" src="/static/columbia.png" /></br>
+                    <img width="200" src="/static/bitly.png" />
+                    <img width="300" src="/static/nytrnd.png" /></p>
+                </section>
                 
 
                 <section>
                     <h3>d3 = <b>d</b>ata <b>d</b>riven <b>d</b>ocuments</h3>
                     <img src="/static/bostock.jpeg" />
-                    <h3>a javascriprt library by Mike Bostock</h3>
+                    <h3>a javascript library by Mike Bostock</h3>
                 </section>
 
                 <section>
@@ -62,18 +70,56 @@
                     <h2>Why d3.js?</h2>
                     <ul>
                         <li>amazing community</li>
-                        <li>everyone has a browser</li>
+                        <li>common to have a browser</li>
                         <li>we benefit from web technology</li>
                     </ul>
                 </section>
 
                 <section>
-                    <p><img src="/static/bitly.png" /></p>
-                    <p>reader.py</p>
-                    <p><img src="/static/tornado.png" /></p>
-                    <p><img src="/static/chrome.png" width="107" height="107"/></p>
+                    <h2>Aims For Today</h2>
+                    <ul>
+                        <li>join html and svg elements with a data set</li>
+                        <li>draw a map of the world</li>
+                        <li>draw new data in response to a websocket</li>
+                        <li>demonstrate transitions</li>
+                    </ul>
+
                 </section>
 
+                <section>
+                    <p><img src="/static/bitly.png" width="180"/></p>
+                    <p>reader.py</p>
+                    <p><img src="/static/tornado.png" /></p>
+                    <p><img src="/static/chrome.png" width="107"/></p>
+                </section>
+
+                <section>
+                    <h1>bad:</h1>
+                    <pre><code>
+{
+    "1364481918": 23,
+    "1364481931": 46,
+    ...
+}
+                    </pre></code>
+                </section>
+
+                <section>
+                    <h1>good:</h1>
+                    <pre><code>
+{
+    {
+        "time":1364481918,
+        "count": 23
+    },
+    {
+        "time":1364481931,
+        "count": 46,
+    },
+    ...
+}
+                    </pre></code>
+                </section>
                 <section>
                 <h3>In every page, the websocket:</h3>
                     <pre><code>
@@ -174,7 +220,17 @@ d3.select('svg').selectAll('circle')
     .attr('r', 4)
                 </code></pre>
             </section>
-
+            <section>
+                <h3> add animation </h3>
+                <pre><code>
+function animate_cricles(circles){
+  circles.style('opacity',0).attr('r',400)
+      .transition()
+      .duration(1000)
+      .attr('r',4)
+      .style('opacity', 1)
+            </code></pre>
+            </section>
 
             </div>
 

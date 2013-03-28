@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>websockets bit</title>
+        <title>draw some circles</title>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans: 700italic,400,300' rel='stylesheet' type='text/css'>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <script src="/static/js/d3.js"></script>
+        <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin-left: 2em;
+        }
+        </style>
 
     </head>
     <body>
 
-    <pre>
-ws.onmessage = function(evt){
-    data = JSON.parse(evt.data); 
-    console.log(data);
-}
-    </pre>
+    <h1>draw some circles:</h1>
 
     <svg>
     </svg>
@@ -22,6 +23,10 @@ ws.onmessage = function(evt){
     <script>
 
         var ws = new WebSocket("ws://localhost:8888/");
+        ws.onmessage = function(evt){
+            data = JSON.parse(evt.data); 
+            console.log(data);
+        }
 
     </script>
 
