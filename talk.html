@@ -36,7 +36,7 @@
 
                 <section>
                     <h1>getting started with d3</h1>
-                    <h3>mike dewar</h3>
+                    <h2>@mikedewar</h2>
                     <a href="https://github.com/mikedewar/monitorama_d3">https://github.com/mikedewar/monitorama_d3</a>
                 </section>
 
@@ -56,9 +56,9 @@
                 </section>
 
                 <section>
-                    <h3>Today:</h3>
+                    <h3>today:</h3>
                     <br />
-                    <h2>Getting Over The First Bit Of d3.js' Learning Curve</h2>
+                    <h2>getting over the first bit of d3.js' learning curve</h2>
                     <br />
                 </section>
                 <section>
@@ -67,7 +67,7 @@
                 </section>
 
                 <section>
-                    <h2>Why d3.js?</h2>
+                    <h2>why d3.js?</h2>
                     <ul>
                         <li>amazing community</li>
                         <li>common to have a browser</li>
@@ -76,21 +76,50 @@
                 </section>
 
                 <section>
-                    <h2>Aims For Today</h2>
+                    <h2>aims for today</h2>
                     <ul>
                         <li>join html and svg elements with a data set</li>
                         <li>draw a map of the world</li>
-                        <li>draw new data in response to a websocket</li>
-                        <li>demonstrate transitions</li>
+                        <li>draw new data in response to a websocket message</li>
+                        <li>demonstrate d3's transitions</li>
+                        <li>demonstrate the use of the chrome developer toolkit</li>
                     </ul>
 
                 </section>
 
                 <section>
-                    <p><img src="/static/bitly.png" width="180"/></p>
-                    <p>reader.py</p>
-                    <p><img src="/static/tornado.png" /></p>
-                    <p><img src="/static/chrome.png" width="107"/></p>
+                    <div style="text-align:left; margin-left:4em">
+                        <p><img src="/static/bitly.png" width="180" style="vertical-align:middle; margin-right: 1em;"/> http://developer.usa.gov/1usagov</p>
+                        <p>reader.py</p>
+                        <p><img src="/static/tornado.png"  style="vertical-align:middle"/></p>
+                        <p><img src="/static/chrome.png" width="107" style="vertical-align:middle"/></p>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>what's in a click:</h3>
+                    <pre><code>{
+    "a": "Mozilla/5.0 ...",
+    "c": "NZ",
+    "tz": "Pacific/Auckland",
+    "gr": "E7",
+    "g": "4dwBHm",
+    "h": "KeNAvr",
+    "l": "nasatwitter",
+    "al": "en-us",
+    "hh": "go.nasa.gov",
+    "r": "http://t.co/8HMEs0hZ7c",
+    "u": "http://apod.nasa.gov/apod/astropix.html",
+    "t": 1364499595,
+    "hc": 1336137728,
+    "cy": "Auckland",
+    "ll": [ -36.866699, 174.766693 ]
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>a JSON aside:</h3>
                 </section>
 
                 <section>
@@ -107,7 +136,7 @@
                 <section>
                     <h1>good:</h1>
                     <pre><code>
-{
+[
     {
         "time":1364481918,
         "count": 23
@@ -117,7 +146,7 @@
         "count": 46,
     },
     ...
-}
+]
                     </pre></code>
                 </section>
                 <section>
@@ -230,6 +259,16 @@ function animate_cricles(circles){
       .attr('r',4)
       .style('opacity', 1)
             </code></pre>
+            </section>
+
+            <section>
+                <h3> where to go from here </h3>
+                <ul>
+                    <li>http://d3js.org/</li>
+                    <li>Interactive Data Visualization for the Web - Scott Murray</li>
+                    <li>http://square.github.com/cube/</li>
+                    <li>Bokeh - https://github.com/ContinuumIO/Bokeh</li>
+                </ul>
             </section>
 
             </div>
